@@ -17,6 +17,8 @@ public class Customer {
     private String phone;
     private String cpf;
     private LocalDate birthDate;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
     private CustomerType type;
 
@@ -35,10 +37,6 @@ public class Customer {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
