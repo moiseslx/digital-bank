@@ -1,5 +1,6 @@
 package br.com.cdb.digitalbank.model;
 
+import br.com.cdb.digitalbank.model.enums.CustomerType;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -16,18 +17,20 @@ public class Customer {
     private String phone;
     private String cpf;
     private LocalDate birthDate;
-
     private Address address;
+    private CustomerType type;
 
     public Customer() {
     }
 
-    public Customer(String name, String email, String phone, String cpf, LocalDate birthDate) {
+    public Customer(String name, String email, String phone, String cpf, LocalDate birthDate, Address address) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.cpf = cpf;
         this.birthDate = birthDate;
+        this.address = address;
+        this.type = CustomerType.COMMON;
     }
 
     public Long getId() {
@@ -76,6 +79,22 @@ public class Customer {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public CustomerType getType() {
+        return type;
+    }
+
+    public void setType(CustomerType type) {
+        this.type = type;
     }
 
     @Override
