@@ -12,8 +12,8 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer number;
-    private String agency;
+    private Long number;
+    private Integer agency;
     private AccountType type;
     private BigDecimal balance;
     @OneToOne(cascade = CascadeType.ALL)
@@ -31,19 +31,19 @@ public class Account {
         return id;
     }
 
-    public Integer getNumber() {
+    public Long getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 
-    public String getAgency() {
+    public Integer getAgency() {
         return agency;
     }
 
-    public void setAgency(String agency) {
+    public void setAgency(Integer agency) {
         this.agency = agency;
     }
 
