@@ -3,9 +3,11 @@ package br.com.cdb.digitalbank.service;
 import br.com.cdb.digitalbank.model.Account;
 import br.com.cdb.digitalbank.model.enums.AccountType;
 import br.com.cdb.digitalbank.repository.AccountRepository;
+import br.com.cdb.digitalbank.service.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Random;
 
@@ -23,6 +25,20 @@ public class AccountService {
         account.setAgency(agency);
         return accountRepository.save(account);
     }
+
+    public Account findById(Long id) {
+        return accountRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Conta não encontrada com id: " + id));
+    }
+
+    public BigDecimal getBalance(Long id) {
+        Account account = findById(id);
+        return account.getBalance();
+    }
+
+    // TODO: Implementar funções básicas como exibir saldo e transferências
+    // TODO: Lembrar que contas correntes tem uma taxa mensal de manutenção, a ser descontada a cada mês
+    // TODO: Lembrar que as contas poupança deve acumular conforme a taxa de rendimento.
 
 
     private Long generateAccountNumber(List<Account> accounts) {

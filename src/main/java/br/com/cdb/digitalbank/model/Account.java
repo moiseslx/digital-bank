@@ -1,9 +1,12 @@
 package br.com.cdb.digitalbank.model;
 
 import br.com.cdb.digitalbank.model.enums.AccountType;
+import br.com.cdb.digitalbank.model.enums.KeyType;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "tb_account")
@@ -18,6 +21,7 @@ public class Account {
     private BigDecimal balance;
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
+    List<Map<KeyType, String>> keys;
 
     public Account() {}
 
@@ -69,5 +73,13 @@ public class Account {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public List<Map<KeyType, String>> getKeys() {
+        return keys;
+    }
+
+    public void setKeys(List<Map<KeyType, String>> keys) {
+        this.keys = keys;
     }
 }
