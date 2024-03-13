@@ -3,7 +3,8 @@ package br.com.cdb.digitalbank.model.enums;
 public enum KeyType {
     EMAIL(1, "Email"),
     PHONE(2, "Telefone"),
-    RANDOM(3, "Aleatório");
+    CPF(3, "CPF"),
+    RANDOM(4, "Aleatório");
 
     private final int value;
     private final String label;
