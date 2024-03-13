@@ -21,7 +21,6 @@ public class Account {
     private BigDecimal balance;
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
-    List<Map<KeyType, String>> keys;
 
     public Account() {}
 
@@ -73,13 +72,5 @@ public class Account {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-
-    public List<Map<KeyType, String>> getKeys() {
-        return keys;
-    }
-
-    public void setKeys(List<Map<KeyType, String>> keys) {
-        this.keys = keys;
     }
 }

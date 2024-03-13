@@ -7,10 +7,9 @@ import br.com.cdb.digitalbank.service.AccountService;
 import br.com.cdb.digitalbank.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/account")
@@ -26,6 +25,11 @@ public class AccountController {
     public ResponseEntity<Account> create(@RequestBody AccountDTO account) {
         Account acc = account.toAccount(customerService.findById(account.customerId()));
         return ResponseEntity.ok(accountService.createAccount(acc));
+    }
+
+    @GetMapping("/balance/{id}")
+    public ResponseEntity<BigDecimal> getBalance(@PathVariable Long id) {
+        return ResponseEntity.ok(accountService.getBalance(id));
     }
 
     // TODO: Implementar o mecanismo de transferência dos tipos pix, cartão de credito, eletrônico, etc.
