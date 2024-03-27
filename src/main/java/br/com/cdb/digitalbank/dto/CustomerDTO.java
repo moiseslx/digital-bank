@@ -12,7 +12,8 @@ public record CustomerDTO(@NotBlank(message = "O nome deve ser informado") Strin
                           @Email(message = "Email inválido") String email,
                           @NotBlank(message = "O telefone deve ser informado") String phone,
                           @CPF(message = "CPF inválido") String cpf,
-                          @Past(message = "Data de nascimento inválido") LocalDate birthDate, AddressDTO address) {
+                          @Past(message = "Data de nascimento inválido") LocalDate birthDate,
+                          AddressDTO address) {
 
     public Customer toCustomer() {
         return new Customer(name, email, phone, cpf, birthDate, address.toAddress());

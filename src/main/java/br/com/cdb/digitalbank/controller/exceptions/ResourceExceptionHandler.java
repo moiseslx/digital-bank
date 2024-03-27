@@ -21,7 +21,7 @@ public class ResourceExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<StandardError> resourceNotFound(EntityNotFoundException e, HttpServletRequest request) {
         StandardError error = new StandardError();
-        error.setTimestamp(Instant.now());
+        error.setTimestamp(Instant.now().toString());
         error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setError("Resource not found");
         error.setMessage(e.getMessage());
@@ -37,7 +37,7 @@ public class ResourceExceptionHandler {
         List<StandardError> errors = fieldErrors.stream()
                 .map(fieldError -> {
                     StandardError error = new StandardError();
-                    error.setTimestamp(Instant.now());
+                    error.setTimestamp(Instant.now().toString());
                     error.setStatus(HttpStatus.BAD_REQUEST.value());
                     error.setError("Validation Error");
                     error.setMessage(fieldError.getDefaultMessage());
@@ -52,7 +52,7 @@ public class ResourceExceptionHandler {
     @ExceptionHandler(DuplicateDataException.class)
     public ResponseEntity<StandardError> duplicateCustomer(DuplicateDataException e, HttpServletRequest request) {
         StandardError error = new StandardError();
-        error.setTimestamp(Instant.now());
+        error.setTimestamp(Instant.now().toString());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         error.setError("Validation Error");
         error.setMessage(e.getMessage());

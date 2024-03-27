@@ -1,11 +1,14 @@
 package br.com.cdb.digitalbank.service;
 
+import br.com.cdb.digitalbank.model.Account;
 import br.com.cdb.digitalbank.model.Pix;
 import br.com.cdb.digitalbank.repository.PixRepository;
 import br.com.cdb.digitalbank.service.exceptions.DuplicateDataException;
+import br.com.cdb.digitalbank.service.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,6 +25,11 @@ public class PixService {
         }
 
         return pixRepository.save(pix);
+    }
+
+    public Account findByPixKey(String pixKey) {
+        Optional<Account> account = Optional.ofNullable(pixRepository.findByPixKey(pixKey).getAccount());
+        return account.orElseThrow(() -> new EntityNotFoundException("Chave pix não encontrada: " + pixKey));
     }
 
     private String generatePixKey(Pix pix) {

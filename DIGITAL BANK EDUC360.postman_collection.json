@@ -1,0 +1,544 @@
+{
+	"info": {
+		"_postman_id": "3f32043a-6020-4035-8974-3abc369aebad",
+		"name": "DIGITAL BANK EDUC360",
+		"description": "Esta coleção de requests abrange o desenvolvimento de um banco digital fictício, oferecendo uma variedade de funcionalidades para gestão de contas, cartões e serviços financeiros. Como:\n\n- **Cadastro de Clientes**\n- **Gestão de Contas**\n- **Transações Financeiras**\n- **Cartões**\n- **Gestão de Limites**\n- **Apólice eletrônica**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28316784"
+	},
+	"item": [
+		{
+			"name": "Cadastrando informações de um cliente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var customers = [\r",
+							"  {\r",
+							"    \"name\": \"Luke Skywalker\",\r",
+							"    \"email\": \"luke.skywalker@example.com\",\r",
+							"    \"phone\": \"+5511988888888\",\r",
+							"    \"cpf\": \"71929862083\",\r",
+							"    \"birthDate\": \"1977-09-01\",\r",
+							"    \"address\": {\r",
+							"      \"street\": \"Tatooine Street\",\r",
+							"      \"number\": 123,\r",
+							"      \"neighborhood\": \"Mos Eisley\",\r",
+							"      \"city\": \"Tatooine\",\r",
+							"      \"state\": \"TA\",\r",
+							"      \"zipCode\": \"12345-678\"\r",
+							"    }\r",
+							"  },\r",
+							"  {\r",
+							"    \"name\": \"Leia Organa\",\r",
+							"    \"email\": \"leia.organa@example.com\",\r",
+							"    \"phone\": \"+5511977777777\",\r",
+							"    \"cpf\": \"38838001049\",\r",
+							"    \"birthDate\": \"1977-05-25\",\r",
+							"    \"address\": {\r",
+							"      \"street\": \"Alderaan Street\",\r",
+							"      \"number\": 456,\r",
+							"      \"neighborhood\": \"Alderaan City\",\r",
+							"      \"city\": \"Alderaan\",\r",
+							"      \"state\": \"AL\",\r",
+							"      \"zipCode\": \"54321-098\"\r",
+							"    }\r",
+							"  },\r",
+							"  {\r",
+							"    \"name\": \"Han Solo\",\r",
+							"    \"email\": \"han.solo@example.com\",\r",
+							"    \"phone\": \"+5511966666666\",\r",
+							"    \"cpf\": \"87672956060\",\r",
+							"    \"birthDate\": \"1970-04-12\",\r",
+							"    \"address\": {\r",
+							"      \"street\": \"Millennium Falcon Street\",\r",
+							"      \"number\": 789,\r",
+							"      \"neighborhood\": \"Corellia\",\r",
+							"      \"city\": \"Corellia\",\r",
+							"      \"state\": \"CO\",\r",
+							"      \"zipCode\": \"13579-246\"\r",
+							"    }\r",
+							"  },\r",
+							"  {\r",
+							"    \"name\": \"Obi-Wan Kenobi\",\r",
+							"    \"email\": \"obiwan.kenobi@example.com\",\r",
+							"    \"phone\": \"+5511955555555\",\r",
+							"    \"cpf\": \"94871356000\",\r",
+							"    \"birthDate\": \"1960-08-19\",\r",
+							"    \"address\": {\r",
+							"      \"street\": \"Jedi Temple Street\",\r",
+							"      \"number\": 101,\r",
+							"      \"neighborhood\": \"Coruscant\",\r",
+							"      \"city\": \"Coruscant\",\r",
+							"      \"state\": \"CO\",\r",
+							"      \"zipCode\": \"24680-135\"\r",
+							"    }\r",
+							"  },\r",
+							"  {\r",
+							"    \"name\": \"Padmé Amidala\",\r",
+							"    \"email\": \"padme.amidala@example.com\",\r",
+							"    \"phone\": \"+5511944444444\",\r",
+							"    \"cpf\": \"33975168030\",\r",
+							"    \"birthDate\": \"1977-04-05\",\r",
+							"    \"address\": {\r",
+							"      \"street\": \"Naboo Palace Street\",\r",
+							"      \"number\": 222,\r",
+							"      \"neighborhood\": \"Theed\",\r",
+							"      \"city\": \"Naboo\",\r",
+							"      \"state\": \"NA\",\r",
+							"      \"zipCode\": \"56789-012\"\r",
+							"    }\r",
+							"  },\r",
+							"  {\r",
+							"    \"name\": \"Yoda\",\r",
+							"    \"email\": \"yoda@example.com\",\r",
+							"    \"phone\": \"+5511933333333\",\r",
+							"    \"cpf\": \"95171356025\",\r",
+							"    \"birthDate\": \"1996-02-27\",\r",
+							"    \"address\": {\r",
+							"      \"street\": \"Dagobah Swamp Street\",\r",
+							"      \"number\": 333,\r",
+							"      \"neighborhood\": \"Dagobah\",\r",
+							"      \"city\": \"Dagobah\",\r",
+							"      \"state\": \"DA\",\r",
+							"      \"zipCode\": \"97531-864\"\r",
+							"    }\r",
+							"  },\r",
+							"  {\r",
+							"    \"name\": \"Mace Windu\",\r",
+							"    \"email\": \"mace.windu@example.com\",\r",
+							"    \"phone\": \"+5511922222222\",\r",
+							"    \"cpf\": \"60913043052\",\r",
+							"    \"birthDate\": \"1970-06-02\",\r",
+							"    \"address\": {\r",
+							"      \"street\": \"Jedi Council Street\",\r",
+							"      \"number\": 444,\r",
+							"      \"neighborhood\": \"Coruscant\",\r",
+							"      \"city\": \"Coruscant\",\r",
+							"      \"state\": \"CO\",\r",
+							"      \"zipCode\": \"13579-246\"\r",
+							"    }\r",
+							"  },\r",
+							"  {\r",
+							"    \"name\": \"Qui-Gon Jinn\",\r",
+							"    \"email\": \"qui.gon.jinn@example.com\",\r",
+							"    \"phone\": \"+5511911111111\",\r",
+							"    \"cpf\": \"65962016009\",\r",
+							"    \"birthDate\": \"1960-01-04\",\r",
+							"    \"address\": {\r",
+							"      \"street\": \"Tatooine Street\",\r",
+							"      \"number\": 555,\r",
+							"      \"neighborhood\": \"Mos Eisley\",\r",
+							"      \"city\": \"Tatooine\",\r",
+							"      \"state\": \"TA\",\r",
+							"      \"zipCode\": \"12345-678\"\r",
+							"    }\r",
+							"  },\r",
+							"  {\r",
+							"    \"name\": \"Rey Skywalker\",\r",
+							"    \"email\": \"rey.skywalker@example.com\",\r",
+							"    \"phone\": \"+5511900000000\",\r",
+							"    \"cpf\": \"65039047037\",\r",
+							"    \"birthDate\": \"2000-05-04\",\r",
+							"    \"address\": {\r",
+							"      \"street\": \"Jakku Desert Street\",\r",
+							"      \"number\": 666,\r",
+							"      \"neighborhood\": \"Jakku\",\r",
+							"      \"city\": \"Jakku\",\r",
+							"      \"state\": \"JA\",\r",
+							"      \"zipCode\": \"75309-864\"\r",
+							"    }\r",
+							"  },\r",
+							"  {\r",
+							"    \"name\": \"Darth Vader\",\r",
+							"    \"email\": \"darth.vader@example.com\",\r",
+							"    \"phone\": \"+5511999999999\",\r",
+							"    \"cpf\": \"97335151082\",\r",
+							"    \"birthDate\": \"1977-06-21\",\r",
+							"    \"address\": {\r",
+							"      \"street\": \"Death Star Street\",\r",
+							"      \"number\": 777,\r",
+							"      \"neighborhood\": \"Death Star\",\r",
+							"      \"city\": \"Death Star\",\r",
+							"      \"state\": \"DS\",\r",
+							"      \"zipCode\": \"99999-999\"\r",
+							"    }\r",
+							"  }\r",
+							"];\r",
+							"\r",
+							"customers.forEach(function(customer) {\r",
+							"  pm.sendRequest({\r",
+							"    url: 'http://localhost:8080/customer/save',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"      'Content-Type': 'application/json'\r",
+							"    },\r",
+							"    body: {\r",
+							"      mode: 'raw',\r",
+							"      raw: JSON.stringify(customer)\r",
+							"    }\r",
+							"  }, function(err, res) {\r",
+							"    if (err) {\r",
+							"      console.error(err);\r",
+							"      return;\r",
+							"    }\r",
+							"    console.log('Cliente criado:', res.json());\r",
+							"  });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Moises Almeida\",\r\n  \"email\": \"joao.silva@example.com\",\r\n  \"phone\": \"+5511999999999\",\r\n  \"cpf\": \"97229067200\",\r\n  \"birthDate\": \"1990-01-01\",\r\n  \"address\": {\r\n    \"street\": \"Rua das Flores\",\r\n    \"number\": 15,\r\n    \"neighborhood\": \"sada\",\r\n    \"city\": \"São Paulo\",\r\n    \"state\": \"SP\",\r\n    \"zipCode\": \"12345-678\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url-bank}}/customer/save",
+					"host": [
+						"{{url-bank}}"
+					],
+					"path": [
+						"customer",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscando um cliente por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-bank}}/customer/1",
+					"host": [
+						"{{url-bank}}"
+					],
+					"path": [
+						"customer",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listando todos os clientes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-bank}}/customer/all",
+					"host": [
+						"{{url-bank}}"
+					],
+					"path": [
+						"customer",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criando uma conta para um cliente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var customers = [\r",
+							"  {\r",
+							"    \"customerId\": 2,\r",
+							"    \"accountType\": \"SAVINGS\"\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 3,\r",
+							"    \"accountType\": \"CHECKING\"\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 4,\r",
+							"    \"accountType\": \"SAVINGS\"\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 5,\r",
+							"    \"accountType\": \"CHECKING\"\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 6,\r",
+							"    \"accountType\": \"SAVINGS\"\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 7,\r",
+							"    \"accountType\": \"CHECKING\"\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 8,\r",
+							"    \"accountType\": \"SAVINGS\"\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 9,\r",
+							"    \"accountType\": \"CHECKING\"\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 10,\r",
+							"    \"accountType\": \"SAVINGS\"\r",
+							"  }\r",
+							"];\r",
+							"\r",
+							"customers.forEach(function(customer) {\r",
+							"  pm.sendRequest({\r",
+							"    url: 'http://localhost:8080/account/create',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"      'Content-Type': 'application/json'\r",
+							"    },\r",
+							"    body: {\r",
+							"      mode: 'raw',\r",
+							"      raw: JSON.stringify({\r",
+							"        \"type\": customer.accountType,\r",
+							"        \"customerId\": customer.customerId\r",
+							"      })\r",
+							"    }\r",
+							"  }, function(err, res) {\r",
+							"    if (err) {\r",
+							"      console.error(err);\r",
+							"      return;\r",
+							"    }\r",
+							"    console.log('Conta criada para o cliente', customer.customerId, '(', customer.accountType, '):', res.json());\r",
+							"  });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": \"CHECKING\",\r\n  \"customerId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url-bank}}/account/create",
+					"host": [
+						"{{url-bank}}"
+					],
+					"path": [
+						"account",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultando saldo da conta por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-bank}}/account/balance/1",
+					"host": [
+						"{{url-bank}}"
+					],
+					"path": [
+						"account",
+						"balance",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criando uma chave PIX",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var customers = [\r",
+							"  {\r",
+							"    \"customerId\": 2\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 3\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 4\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 5\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 6\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 7\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 8\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 9\r",
+							"  },\r",
+							"  {\r",
+							"    \"customerId\": 10\r",
+							"  }\r",
+							"];\r",
+							"\r",
+							"var pixTypes = [\"EMAIL\", \"PHONE\", \"CPF\", \"RANDOM\"];\r",
+							"\r",
+							"customers.forEach(function(customer) {\r",
+							"  pixTypes.forEach(function(type) {\r",
+							"    pm.sendRequest({\r",
+							"      url: 'http://localhost:8080/pix/save/',\r",
+							"      method: 'POST',\r",
+							"      header: {\r",
+							"        'Content-Type': 'application/json'\r",
+							"      },\r",
+							"      body: {\r",
+							"        mode: 'raw',\r",
+							"        raw: JSON.stringify({\r",
+							"          \"type\": type,\r",
+							"          \"customerId\": customer.customerId\r",
+							"        })\r",
+							"      }\r",
+							"    }, function(err, res) {\r",
+							"      if (err) {\r",
+							"        console.error(err);\r",
+							"        return;\r",
+							"      }\r",
+							"      console.log('Chave PIX (' + type + ') criada para o cliente', customer.customerId, ':', res.json());\r",
+							"    });\r",
+							"  });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\":\"EMAIL\",\r\n    \"customerId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url-bank}}/pix/save",
+					"host": [
+						"{{url-bank}}"
+					],
+					"path": [
+						"pix",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO: Realizando transferência via PIX",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"originId\":2,\r\n    \"destinationKey\":\"destinationKey\",\r\n    \"amount\":100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url-bank}}/transaction/pix",
+					"host": [
+						"{{url-bank}}"
+					],
+					"path": [
+						"transaction",
+						"pix"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TODO: Realizando transferência por cartão de crédito",
+			"request": {
+				"method": "POST",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "TODO: Realizando transferência por cartão de débito",
+			"request": {
+				"method": "POST",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url-bank",
+			"value": "localhost:8080",
+			"type": "string"
+		}
+	]
+}

@@ -2,6 +2,7 @@ package br.com.cdb.digitalbank.model;
 
 import br.com.cdb.digitalbank.model.enums.AccountType;
 import br.com.cdb.digitalbank.model.enums.KeyType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -19,6 +20,8 @@ public class Account {
     private Integer agency;
     private AccountType type;
     private BigDecimal balance;
+
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
 

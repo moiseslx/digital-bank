@@ -32,5 +32,11 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getBalance(id));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Account> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(accountService.findById(id));
+    }
+
+
     // TODO: Implementar o mecanismo de transferência dos tipos pix, cartão de credito, eletrônico, etc.
 }
