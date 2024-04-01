@@ -27,9 +27,9 @@ public class PixService {
         return pixRepository.save(pix);
     }
 
-    public Account findByPixKey(String pixKey) {
-        Optional<Account> account = Optional.ofNullable(pixRepository.findByPixKey(pixKey).getAccount());
-        return account.orElseThrow(() -> new EntityNotFoundException("Chave pix não encontrada: " + pixKey));
+    public Pix findByPixKey(String pixKey) {
+        Optional<Pix> pix = Optional.ofNullable(pixRepository.findByPixKey(pixKey));
+        return pix.orElseThrow(() -> new EntityNotFoundException("Chave pix não encontrada: " + pixKey));
     }
 
     private String generatePixKey(Pix pix) {

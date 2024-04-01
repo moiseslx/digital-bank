@@ -1,49 +1,42 @@
 package br.com.cdb.digitalbank.model;
 
 import br.com.cdb.digitalbank.model.enums.CardType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
 
-@Entity
-@Table(name = "tb_card")
-public class Card {
+@MappedSuperclass
+public abstract class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String cardNumber;
-    private List<CardType> type;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
-
-    BigDecimal limitCard;
-    BigDecimal dailyLimit;
+    private BigDecimal dailyLimit;
     private LocalDate expirationDate;
     private boolean active;
+
+    @JsonIgnore
     private String password;
+    private CardType cardType;
 
-    public Card() {}
-
-    public Card(String cardNumber, List<CardType> type, Account account, BigDecimal limitCard, BigDecimal dailyLimit, LocalDate expirationDate, boolean active, String password) {
+    public Card(String cardNumber, Account account, BigDecimal dailyLimit, LocalDate expirationDate, boolean active, String password, CardType cardType) {
         this.cardNumber = cardNumber;
-        this.type = type;
         this.account = account;
-        this.limitCard = limitCard;
         this.dailyLimit = dailyLimit;
         this.expirationDate = expirationDate;
         this.active = active;
         this.password = password;
+        this.cardType = cardType;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Card() {}
 
     public String getCardNumber() {
         return cardNumber;
@@ -53,28 +46,12 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public List<CardType> getType() {
-        return type;
-    }
-
-    public void setType(List<CardType> type) {
-        this.type = type;
-    }
-
     public Account getAccount() {
         return account;
     }
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public BigDecimal getLimitCard() {
-        return limitCard;
-    }
-
-    public void setLimitCard(BigDecimal limitCard) {
-        this.limitCard = limitCard;
     }
 
     public BigDecimal getDailyLimit() {
@@ -109,16 +86,11 @@ public class Card {
         this.password = password;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return active == card.active && Objects.equals(id, card.id) && Objects.equals(cardNumber, card.cardNumber) && Objects.equals(type, card.type) && Objects.equals(account, card.account) && Objects.equals(limitCard, card.limitCard) && Objects.equals(dailyLimit, card.dailyLimit) && Objects.equals(expirationDate, card.expirationDate) && Objects.equals(password, card.password);
+    public CardType getCardType() {
+        return cardType;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, cardNumber, type, account, limitCard, dailyLimit, expirationDate, active, password);
+    public void setCardType(CardType cardType) {
+        this.cardType = cardType;
     }
 }

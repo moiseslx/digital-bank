@@ -8,6 +8,7 @@ import br.com.cdb.digitalbank.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,9 +28,10 @@ public class TransactionController {
     private AccountService accountService;
 
     @PostMapping("/pix")
-    public ResponseEntity<Transaction> pix(TransactionPixDTO transactionDTO) {
+    public ResponseEntity<Transaction> pix(@RequestBody TransactionPixDTO transactionDTO) {
         return ResponseEntity.ok(transactionService
                 .execute(accountService.findById(transactionDTO.originId()),
-                         pixService.findByPixKey(transactionDTO.destinationKey()), transactionDTO.amount()));
+                         pixService.findByPixKey(transactionDTO.destinationKey()),
+                        transactionDTO.amount()));
     }
 }

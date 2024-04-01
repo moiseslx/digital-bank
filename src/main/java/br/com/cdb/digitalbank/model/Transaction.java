@@ -4,6 +4,7 @@ import br.com.cdb.digitalbank.model.enums.TransactionType;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Entity
 @Table(name = "tb_transaction")
@@ -23,13 +24,16 @@ public class Transaction {
     @JoinColumn(name = "destination_id", nullable = false)
     private Account destination;
 
+    private Instant timestamp;
+
     public Transaction() {}
 
-    public Transaction(TransactionType type, BigDecimal amount, Account origin, Account destination) {
+    public Transaction(TransactionType type, BigDecimal amount, Account origin, Account destination, Instant timestamp) {
         this.type = type;
         this.amount = amount;
         this.origin = origin;
         this.destination = destination;
+        this.timestamp = timestamp;
     }
 
     public Long getId() {
@@ -66,5 +70,13 @@ public class Transaction {
 
     public void setDestination(Account destination) {
         this.destination = destination;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
     }
 }
