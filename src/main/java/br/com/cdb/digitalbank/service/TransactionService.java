@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -61,6 +63,26 @@ public class TransactionService {
             throw new InsufficientBalanceException("Saldo insuficiente");
         }
 
+        if (origin.getExpirationDate().isBefore(LocalDate.now())) {
+            throw new ExpiredCardException("Cartão expirado");
+        }
+
+        if (origin.getDailyLimit().compareTo(amount) < 0) {
+            throw new InsufficientBalanceException("Limite diário insuficiente");
+        }
+
+        // TODO: Implementar a lógica do limite diário
+        // TODO: Implementar taxa de transferência de cartão de debito
+        List<Transaction> transactions = transactionRepository.findByOriginAndTimestampBetween(origin.getAccount(), Instant.now().minus(1, ChronoUnit.DAYS), Instant.now());
+        BigDecimal sum = transactions.stream().filter(t -> t.getType().equals(TransactionType.DEBIT)).map(Transaction::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        if (sum.add(amount).compareTo(origin.getDailyLimit()) > 0) {
+            throw new InsufficientBalanceException("Limite diário insuficiente");
+        }
+
+        origin.getAccount().setBalance(origin.getAccount().getBalance().subtract(amount));
+        destination.setBalance(destination.getBalance().add(amount));
+
         Transaction transaction = new Transaction();
         transaction.setType(TransactionType.DEBIT);
         transaction.setAmount(amount);
@@ -68,10 +90,7 @@ public class TransactionService {
         transaction.setDestination(destination);
         transaction.setTimestamp(Instant.now());
 
-        BigDecimal newBalance = origin.getAccount().getBalance().subtract(amount);
-        origin.getAccount().setBalance(newBalance);
-
-        return transaction;
+        return transactionRepository.save(transaction);
     }
 
     // Serviço de transferência por TED
