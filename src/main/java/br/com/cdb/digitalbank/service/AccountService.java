@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -52,6 +53,7 @@ public class AccountService {
         return Math.toIntExact(Math.abs(random.nextLong() % 10000L));
     }
 
-    // TODO: Lembrar que contas correntes tem uma taxa mensal de manutenção, a ser descontada a cada mês
-    // TODO: Lembrar que as contas poupança deve acumular conforme a taxa de rendimento.
+    public List<Account> findAll() {
+        return accountRepository.findAll();
+    }
 }

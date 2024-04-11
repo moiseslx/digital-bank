@@ -4,6 +4,8 @@ import br.com.cdb.digitalbank.model.Account;
 import br.com.cdb.digitalbank.model.DebitCard;
 import br.com.cdb.digitalbank.model.enums.CardType;
 import br.com.cdb.digitalbank.repository.DebitCardRepository;
+import br.com.cdb.digitalbank.service.exceptions.EntityNotFoundException;
+import br.com.cdb.digitalbank.service.exceptions.IncorrectPasswordException;
 import br.com.cdb.digitalbank.service.util.GenerateCardNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,20 +28,34 @@ public class DebitCardService {
         card.setCardNumber(GenerateCardNumber.execute());
         card.setPassword(password);
 
-        switch (account.getCustomer().getType()) {
-            case SUPER -> card.setDailyLimit(BigDecimal.valueOf(500.00));
-            case PREMIUM -> card.setDailyLimit(BigDecimal.valueOf(250.00));
-            default -> card.setDailyLimit(BigDecimal.valueOf(50.00));
-        }
+        card.setDailyLimit(new BigDecimal("100.00"));
 
         return debitCardRepository.save(card);
     }
 
     public DebitCard findById(Long id) {
-        return debitCardRepository.findById(id).orElse(null);
+        return debitCardRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Cartão de débito não encontrada com id: " + id)
+        );
+    }
+
+    public DebitCard updateDailyLimit(Long id, BigDecimal dailyLimit) {
+        return debitCardRepository.findById(id).map(debitCard -> {
+            debitCard.setDailyLimit(dailyLimit);
+            return debitCardRepository.save(debitCard);
+        }).orElseThrow(() -> new EntityNotFoundException("Cartão de crédito não encontrada com id: " + id));
     }
 
     public void disable(Long id) {
         debitCardRepository.findById(id).ifPresent(debitCard -> debitCard.setActive(false));
+    }
+
+    public void changePassword(Long id, String password, String newPassword) {
+        debitCardRepository.findById(id).ifPresent(debitCard -> {
+            if (!debitCard.getPassword().equals(password)) {
+                throw new IncorrectPasswordException("Senha inválida");
+            }
+            debitCard.setPassword(newPassword);
+        });
     }
 }

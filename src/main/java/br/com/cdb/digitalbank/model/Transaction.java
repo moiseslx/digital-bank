@@ -26,14 +26,17 @@ public class Transaction {
 
     private Instant timestamp;
 
+    private BigDecimal tax;
+
     public Transaction() {}
 
-    public Transaction(TransactionType type, BigDecimal amount, Account origin, Account destination, Instant timestamp) {
+    public Transaction(TransactionType type, BigDecimal amount, Account origin, Account destination, Instant timestamp, BigDecimal tax) {
         this.type = type;
         this.amount = amount;
         this.origin = origin;
         this.destination = destination;
         this.timestamp = timestamp;
+        this.tax = tax;
     }
 
     public Long getId() {
@@ -78,5 +81,13 @@ public class Transaction {
 
     public void setTimestamp(Instant timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public BigDecimal getTax() {
+        return tax;
+    }
+
+    public void setTax(BigDecimal tax) {
+        this.tax = tax;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/account")
@@ -38,5 +39,8 @@ public class AccountController {
     }
 
 
-    // TODO: Implementar o mecanismo de transferência dos tipos pix, cartão de credito, eletrônico, etc.
+    @GetMapping("/all")
+    public ResponseEntity<List<Account>> findAll() {
+        return ResponseEntity.ok(accountService.findAll());
+    }
 }
