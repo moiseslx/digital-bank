@@ -7,6 +7,8 @@ import br.com.cdb.digitalbank.service.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class CustomerService {
 
@@ -20,6 +22,10 @@ public class CustomerService {
 
         if (customerRepository.findByEmail(customer.getEmail()) != null) {
             throw new DuplicateDataException("Cliente existente com o email: " + customer.getEmail());
+        }
+
+        if (customer.getBirthDate() == null || customer.getBirthDate().isAfter(LocalDate.now().minusYears(18))) {
+            throw new IllegalArgumentException("Cliente deve ter 18 anos ou mais");
         }
 
         return customerRepository.save(customer);

@@ -25,14 +25,14 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String name, String email, String phone, String cpf, LocalDate birthDate, Address address) {
+    public Customer(String name, String email, String phone, String cpf, LocalDate birthDate, Address address, CustomerType type) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.cpf = cpf;
         this.birthDate = birthDate;
         this.address = address;
-        this.type = CustomerType.COMMON;
+        this.type = type;
     }
 
     public Long getId() {

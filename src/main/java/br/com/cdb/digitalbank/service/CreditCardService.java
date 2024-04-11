@@ -33,11 +33,10 @@ public class CreditCardService {
         card.setCardNumber(GenerateCardNumber.execute());
 
         switch (account.getCustomer().getType()) {
-            case SUPER -> limitCard = BigDecimal.valueOf(1000.00);
-            case PREMIUM -> limitCard = BigDecimal.valueOf(500.00);
-            default -> limitCard = BigDecimal.valueOf(100.00);
+            case SUPER -> limitCard = BigDecimal.valueOf(5000.00);
+            case PREMIUM -> limitCard = BigDecimal.valueOf(10000.00);
+            default -> limitCard = BigDecimal.valueOf(1000.00);
         }
-
         card.setCardType(CardType.CREDIT);
         card.setDailyLimit(new BigDecimal("100.00"));
         card.setLimitCard(limitCard);

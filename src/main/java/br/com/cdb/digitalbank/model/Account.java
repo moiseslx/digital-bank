@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,8 @@ public class Account {
     private AccountType type;
     private BigDecimal balance;
 
+    private LocalDate creationDate;
+
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
@@ -31,6 +34,7 @@ public class Account {
         this.type = type;
         this.customer = customer;
         this.balance = BigDecimal.valueOf(100.00);
+        this.creationDate = LocalDate.now();
     }
 
     public Long getId() {
@@ -75,5 +79,9 @@ public class Account {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
     }
 }
