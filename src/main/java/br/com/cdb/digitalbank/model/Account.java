@@ -24,7 +24,6 @@ public class Account {
 
     private LocalDate creationDate;
 
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
 

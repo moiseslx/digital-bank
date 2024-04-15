@@ -1,10 +1,11 @@
 package br.com.cdb.digitalbank.controller;
 
 import br.com.cdb.digitalbank.dto.AccountDTO;
-import br.com.cdb.digitalbank.dto.CustomerDTO;
 import br.com.cdb.digitalbank.model.Account;
+import br.com.cdb.digitalbank.model.Customer;
 import br.com.cdb.digitalbank.service.AccountService;
 import br.com.cdb.digitalbank.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +23,11 @@ public class AccountController {
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping("/create")
-    public ResponseEntity<Account> create(@RequestBody AccountDTO account) {
-        Account acc = account.toAccount(customerService.findById(account.customerId()));
-        return ResponseEntity.ok(accountService.createAccount(acc));
+    @PostMapping("/save")
+    public ResponseEntity<Account> save(@Valid @RequestBody AccountDTO accountDTO) {
+        var customerToSave = customerService.save(accountDTO.toCustomer());
+        var account = accountService.createAccount(new Account(accountDTO.accountType(), customerToSave));
+        return ResponseEntity.ok(account);
     }
 
     @GetMapping("/balance/{id}")

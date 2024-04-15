@@ -1,13 +1,16 @@
 package br.com.cdb.digitalbank.service;
 
 import br.com.cdb.digitalbank.model.Account;
+import br.com.cdb.digitalbank.model.enums.AccountType;
 import br.com.cdb.digitalbank.repository.AccountRepository;
 import br.com.cdb.digitalbank.service.exceptions.DuplicateDataException;
 import br.com.cdb.digitalbank.service.exceptions.EntityNotFoundException;
+import br.com.cdb.digitalbank.service.util.GenerateNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
@@ -22,8 +25,8 @@ public class AccountService {
             throw new DuplicateDataException("Conta existente para o cliente: " + account.getCustomer().getId());
         }
 
-        account.setNumber(generateNumber());
-        account.setAgency(generateAgency());
+        account.setNumber(GenerateNumber.generateAccountNumber());
+        account.setAgency(GenerateNumber.generateAgencyNumber());
         return accountRepository.save(account);
     }
 
@@ -37,23 +40,11 @@ public class AccountService {
         return account.getBalance();
     }
 
-    private Long generateNumber() {
-        Random random = new Random();
-        Long number = Math.abs(random.nextLong() % 100000000L);
-
-        if (accountRepository.findByNumber(number) != null) {
-            return generateNumber();
-        }
-
-        return number;
-    }
-
-    private Integer generateAgency() {
-        Random random = new Random();
-        return Math.toIntExact(Math.abs(random.nextLong() % 10000L));
-    }
-
     public List<Account> findAll() {
         return accountRepository.findAll();
+    }
+
+    public List<Account> findByAccountsCompleteAnotherMonth() {
+        return accountRepository.findByAccountsCompleteAnotherMonth();
     }
 }

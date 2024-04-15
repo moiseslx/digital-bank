@@ -8,7 +8,7 @@ import br.com.cdb.digitalbank.repository.CreditCardRepository;
 import br.com.cdb.digitalbank.service.exceptions.DuplicateDataException;
 import br.com.cdb.digitalbank.service.exceptions.EntityNotFoundException;
 import br.com.cdb.digitalbank.service.exceptions.IncorrectPasswordException;
-import br.com.cdb.digitalbank.service.util.GenerateCardNumber;
+import br.com.cdb.digitalbank.service.util.GenerateNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class CreditCardService {
 
         card.setAccount(account);
         BigDecimal limitCard;
-        card.setCardNumber(GenerateCardNumber.execute());
+        card.setCardNumber(GenerateNumber.generateCardNumber());
 
         switch (account.getCustomer().getType()) {
             case SUPER -> limitCard = BigDecimal.valueOf(5000.00);

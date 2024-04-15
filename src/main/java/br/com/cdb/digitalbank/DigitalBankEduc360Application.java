@@ -1,5 +1,6 @@
 package br.com.cdb.digitalbank;
 
+import br.com.cdb.digitalbank.service.AccountService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;

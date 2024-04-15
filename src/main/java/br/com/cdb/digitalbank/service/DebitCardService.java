@@ -6,7 +6,7 @@ import br.com.cdb.digitalbank.model.enums.CardType;
 import br.com.cdb.digitalbank.repository.DebitCardRepository;
 import br.com.cdb.digitalbank.service.exceptions.EntityNotFoundException;
 import br.com.cdb.digitalbank.service.exceptions.IncorrectPasswordException;
-import br.com.cdb.digitalbank.service.util.GenerateCardNumber;
+import br.com.cdb.digitalbank.service.util.GenerateNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class DebitCardService {
         card.setCardType(CardType.DEBIT);
         card.setActive(true);
         card.setExpirationDate(LocalDate.now().plusYears(5));
-        card.setCardNumber(GenerateCardNumber.execute());
+        card.setCardNumber(GenerateNumber.generateCardNumber());
         card.setPassword(password);
 
         card.setDailyLimit(new BigDecimal("100.00"));

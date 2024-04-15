@@ -1,7 +1,9 @@
 package br.com.cdb.digitalbank.controller;
 
-import br.com.cdb.digitalbank.dto.CustomerDTO;
+import br.com.cdb.digitalbank.dto.AccountDTO;
+import br.com.cdb.digitalbank.model.Account;
 import br.com.cdb.digitalbank.model.Customer;
+import br.com.cdb.digitalbank.service.AccountService;
 import br.com.cdb.digitalbank.service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,6 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
-
-    @PostMapping("/save")
-    public ResponseEntity<Customer> save(@Valid @RequestBody CustomerDTO customer) {
-        return ResponseEntity.ok(customerService.save(customer.toCustomer()));
-    }
 
     @GetMapping("/all")
     public ResponseEntity<Iterable<Customer>> findAll() {
