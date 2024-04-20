@@ -22,7 +22,7 @@ public class ResourceExceptionHandler {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now().toString());
         error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setError("Resource not found");
+        error.setError("Entidade não encontrada");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
@@ -38,7 +38,7 @@ public class ResourceExceptionHandler {
                     StandardError error = new StandardError();
                     error.setTimestamp(Instant.now().toString());
                     error.setStatus(HttpStatus.BAD_REQUEST.value());
-                    error.setError("Validation Error");
+                    error.setError("Dados inválidos");
                     error.setMessage(fieldError.getDefaultMessage());
                     error.setPath(request.getRequestURI());
                     return error;
@@ -53,10 +53,27 @@ public class ResourceExceptionHandler {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now().toString());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setError("Validation Error");
+        error.setError("Dados duplicados");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(MultipleValidationException.class)
+    public ResponseEntity<List<StandardError>> multipleValidationErrors(MultipleValidationException e, HttpServletRequest request) {
+        List<StandardError> errors = e.getExceptions().stream()
+                .map(exception -> {
+                    StandardError error = new StandardError();
+                    error.setTimestamp(Instant.now().toString());
+                    error.setStatus(HttpStatus.BAD_REQUEST.value());
+                    error.setError("Dados já existentes");
+                    error.setMessage(exception.getMessage());
+                    error.setPath(request.getRequestURI());
+                    return error;
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
     @ExceptionHandler(ExpiredCardException.class)
@@ -64,7 +81,7 @@ public class ResourceExceptionHandler {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now().toString());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setError("Validation Error");
+        error.setError("Cartão expirado");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
@@ -75,7 +92,7 @@ public class ResourceExceptionHandler {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now().toString());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setError("Validation Error");
+        error.setError("Saldo insuficiente");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
@@ -86,7 +103,7 @@ public class ResourceExceptionHandler {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now().toString());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setError("Validation Error");
+        error.setError("TED não disponível");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
@@ -97,7 +114,7 @@ public class ResourceExceptionHandler {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now().toString());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setError("Validation Error");
+        error.setError("Argumento inválido");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
@@ -108,7 +125,7 @@ public class ResourceExceptionHandler {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now().toString());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setError("Validation Error");
+        error.setError("Senha inválida");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);

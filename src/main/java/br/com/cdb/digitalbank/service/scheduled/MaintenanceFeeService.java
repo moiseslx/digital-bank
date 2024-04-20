@@ -25,13 +25,13 @@ public class MaintenanceFeeService {
      * → R$ 8,00 para clientes Super
      * → R$ 5,00 para clientes Premium
      */
-    @Scheduled(cron = "* * * * * *")
-    public void execute() {
-        Stream<Account> accounts = accountService
-                .findByAccountsCompleteAnotherMonth()
-                .stream()
-                .filter(account -> account.getType().equals(AccountType.CHECKING));
-
-        accounts.forEach(account -> account.setBalance(account.getBalance().subtract(BigDecimal.valueOf(12))));
-    }
+//    @Scheduled(cron = "* * * * * *")
+//    public void execute() {
+//        Stream<Account> accounts = accountService
+//                .findByAccountsCompleteAnotherMonth()
+//                .stream()
+//                .filter(account -> account.getType().equals(AccountType.CHECKING));
+//
+//        accounts.forEach(account -> account.setBalance(account.getBalance().subtract(BigDecimal.valueOf(12))));
+//    }
 }
