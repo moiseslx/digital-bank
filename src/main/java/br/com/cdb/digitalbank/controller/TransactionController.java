@@ -56,7 +56,7 @@ public class TransactionController {
                         transactionDTO.password())); // Senha do cartão
     }
 
-    @PostMapping("/all/{id}")
+    @GetMapping("/all/{id}")
     public ResponseEntity<List<Transaction>> all(@PathVariable Long id) {
         return ResponseEntity.ok(transactionService.findAllByAccountId(accountService.findById(id)));
     }

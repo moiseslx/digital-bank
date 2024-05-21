@@ -98,17 +98,6 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
-    @ExceptionHandler(TEDUnavailableException.class)
-    public ResponseEntity<StandardError> tedUnavailable(TEDUnavailableException e, HttpServletRequest request) {
-        StandardError error = new StandardError();
-        error.setTimestamp(Instant.now().toString());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setError("TED não disponível");
-        error.setMessage(e.getMessage());
-        error.setPath(request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-    }
-
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<StandardError> illegalArgument(IllegalArgumentException e, HttpServletRequest request) {
         StandardError error = new StandardError();
@@ -128,6 +117,6 @@ public class ResourceExceptionHandler {
         error.setError("Senha inválida");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 }

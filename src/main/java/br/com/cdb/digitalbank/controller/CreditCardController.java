@@ -6,6 +6,7 @@ import br.com.cdb.digitalbank.model.CreditCard;
 import br.com.cdb.digitalbank.service.AccountService;
 import br.com.cdb.digitalbank.service.CreditCardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class CreditCardController {
 
     @PostMapping
     public ResponseEntity<CreditCard> save(@RequestBody CardDTO dto) {
-        return ResponseEntity.ok(creditCardService.save(accountService.findById(dto.accountId()), dto.password()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(creditCardService.save(accountService.findById(dto.accountId()), dto.password()));
     }
 
     @PostMapping("/disable/{id}")

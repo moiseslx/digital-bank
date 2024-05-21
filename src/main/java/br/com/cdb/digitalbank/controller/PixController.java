@@ -21,11 +21,11 @@ public class PixController {
     @Autowired
     private AccountService accountService;
 
-    @PostMapping("/save")
+    @PostMapping
     public ResponseEntity<Pix> save(@RequestBody PixDTO pixDTO) {
         Pix obj = new Pix();
         obj.setType(pixDTO.type());
-        obj.setAccount(accountService.findById(pixDTO.customerId()));
+        obj.setAccount(accountService.findById(pixDTO.accountId()));
         return ResponseEntity.ok(pixService.save(obj));
     }
 }

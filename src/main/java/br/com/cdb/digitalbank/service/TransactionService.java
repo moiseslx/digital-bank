@@ -36,7 +36,7 @@ public class TransactionService {
 
     //Serviço de transferência de cartão de débito
     public Transaction execute(DebitCard origin, Account destination, BigDecimal amount, String password) {
-        if (!origin.getPassword().equals(password)) {
+        if (origin.getPassword().equals(password)) {
             BigDecimal tax = calculateTax(origin.getAccount(), amount, TransactionType.DEBIT);
 
             validateDebitCard(origin, amount, tax);

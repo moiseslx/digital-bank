@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
-    Account findByNumber(Long number);
+    Account findByCustomerCpf(String cpf);
     Account findByCustomerId(Long customerId);
 
     @Query(value = "SELECT * FROM tb_account WHERE AGE(current_date, creation_date) >= INTERVAL '1 month'", nativeQuery = true)

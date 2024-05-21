@@ -6,7 +6,9 @@ import br.com.cdb.digitalbank.service.AccountService;
 import br.com.cdb.digitalbank.service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -25,13 +27,14 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<Account> save(@Valid @RequestBody AccountDTO accountDTO) {
         var customerToSave = customerService.save(accountDTO.toCustomer());
-        var account = accountService.createAccount(new Account(accountDTO.accountType(), customerToSave));
-        return ResponseEntity.ok(account);
+        var account = accountService.createAccount(new Account(accountDTO.accountType(), customerToSave, accountDTO.password()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(account);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Account> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(accountService.findById(id));
+    @GetMapping
+    public ResponseEntity<Account> findById() {
+        var id = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        return ResponseEntity.ok(accountService.findById(Long.valueOf(id)));
     }
 
     @GetMapping("/balance/{id}")

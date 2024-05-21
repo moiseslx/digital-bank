@@ -25,14 +25,19 @@ public class Account {
     private LocalDate creationDate;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private Customer customer;
+
+    @JsonIgnore
+    private String password;
 
     public Account() {}
 
-    public Account(AccountType type, Customer customer) {
+    public Account(AccountType type, Customer customer, String password) {
+        this.password = password;
         this.type = type;
         this.customer = customer;
-        this.balance = BigDecimal.valueOf(100.00);
+        this.balance = BigDecimal.valueOf(200.00);
         this.creationDate = LocalDate.now();
     }
 
@@ -82,5 +87,13 @@ public class Account {
 
     public LocalDate getCreationDate() {
         return creationDate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

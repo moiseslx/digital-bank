@@ -13,6 +13,7 @@ public record AccountDTO(@Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Nome inv
                          @NotBlank(message = "O telefone deve ser informado") String phone,
                          @CPF(message = "CPF inválido") String cpf,
                          @Past(message = "Data de nascimento inválido") LocalDate birthDate,
+                         String password,
                          AddressDTO address,
                          CustomerType customerType,
                          AccountType accountType) {
